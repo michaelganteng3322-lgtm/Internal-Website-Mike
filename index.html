@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeMed Store | Premium Digital Services</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; -webkit-tap-highlight-color: transparent; }
+        
+        /* Carousel Transitions */
+        .carousel-track { transition: transform 0.5s ease-in-out; }
+        
+        /* Payment Card Active State */
+        .payment-card { transition: all 0.2s ease; border: 2px solid #e2e8f0; }
+        .payment-card.active { border-color: #2563eb; background-color: #eff6ff; }
+        .payment-card.active .check-icon { display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- FIXED NAVBAR: Must never be hidden by JS -->
+    <nav class="fixed top-0 left-0 w-full bg-white shadow-sm z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer group" onclick="navigate('view-home')">
+                    <i class="fas fa-rocket text-brand-600 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-extrabold text-xl text-gray-900 tracking-tight">KeMed Store</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" onclick="navigate('view-home')" class="text-gray-600 hover:text-brand-600 font-semibold transition-colors">Beranda</a>
+                    <a href="#" onclick="navigate('view-services')" class="text-gray-600 hover:text-brand-600 font-semibold transition-colors">Layanan</a>
+                    <a href="#" onclick="navigate('view-leaderboard')" class="text-gray-600 hover:text-brand-600 font-semibold transition-colors">Leaderboard</a>
+                    <a href="#" onclick="navigate('view-about')" class="text-gray-600 hover:text-brand-600 font-semibold transition-colors">Tentang Kami</a>
+                    <a href="#" onclick="navigate('view-contact')" class="text-gray-600 hover:text-brand-600 font-semibold transition-colors">Kontak</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-gray-600 hover:text-brand-600 focus:outline-none text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 shadow-md">
+            <div class="px-4 py-3 flex flex-col space-y-3">
+                <a href="#" onclick="navigate('view-home'); toggleMobileMenu()" class="text-gray-700 font-medium hover:text-brand-600">Beranda</a>
+                <a href="#" onclick="navigate('view-services'); toggleMobileMenu()" class="text-gray-700 font-medium hover:text-brand-600">Layanan</a>
+                <a href="#" onclick="navigate('view-leaderboard'); toggleMobileMenu()" class="text-gray-700 font-medium hover:text-brand-600">Leaderboard</a>
+                <a href="#" onclick="navigate('view-about'); toggleMobileMenu()" class="text-gray-700 font-medium hover:text-brand-600">Tentang Kami</a>
+                <a href="#" onclick="navigate('view-contact'); toggleMobileMenu()" class="text-gray-700 font-medium hover:text-brand-600">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="pt-16 min-h-screen bg-gray-50 flex flex-col">
+        
+        <!-- ================= HOME VIEW ================= -->
+        <div id="view-home" class="view-section block pb-12 flex-grow">
+            <!-- 1. Hero Carousel -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+                <div class="relative w-full h-[250px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg group">
+                    <div id="carousel-track" class="carousel-track flex w-full h-full">
+                        <!-- Slide 1 -->
+                        <div class="w-full h-full flex-shrink-0 relative">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Kerja" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-900/40 flex items-center">
+                                <div class="px-8 md:px-16 text-white max-w-2xl">
+                                    <h2 class="text-2xl md:text-4xl font-extrabold mb-3 leading-tight">Produktivitas Tanpa Batas</h2>
+                                    <p class="text-gray-200 text-sm md:text-lg mb-5">Akses aplikasi premium untuk maksimalkan pekerjaan Anda setiap hari.</p>
+                                    <button onclick="navigate('view-services')" class="bg-brand-600 hover:bg-brand-500 text-white font-bold py-2.5 px-6 rounded-lg transition-colors text-sm md:text-base">Mulai Sekarang</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="w-full h-full flex-shrink-0 relative">
+                            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80" alt="Hiburan" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-900/40 flex items-center">
+                                <div class="px-8 md:px-16 text-white max-w-2xl">
+                                    <h2 class="text-2xl md:text-4xl font-extrabold mb-3 leading-tight">Hiburan Premium Keluarga</h2>
+                                    <p class="text-gray-200 text-sm md:text-lg mb-5">Streaming film dan musik tanpa iklan, langsung dari genggaman.</p>
+                                    <button onclick="navigate('view-services')" class="bg-brand-600 hover:bg-brand-500 text-white font-bold py-2.5 px-6 rounded-lg transition-colors text-sm md:text-base">Lihat Katalog</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="w-full h-full flex-shrink-0 relative">
+                            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80" alt="Teknologi" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-900/40 flex items-center">
+                                <div class="px-8 md:px-16 text-white max-w-2xl">
+                                    <h2 class="text-2xl md:text-4xl font-extrabold mb-3 leading-tight">Akses AI & Komunikasi</h2>
+                                    <p class="text-gray-200 text-sm md:text-lg mb-5">Tingkatkan kreativitas dengan ChatGPT Plus dan Telegram Premium.</p>
+                                    <button onclick="navigate('view-services')" class="bg-brand-600 hover:bg-brand-500 text-white font-bold py-2.5 px-6 rounded-lg transition-colors text-sm md:text-base">Order Instan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carousel Controls -->
+                    <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/30 hover:bg-white/50 backdrop-blur-sm rounded-full text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/30 hover:bg-white/50 backdrop-blur-sm rounded-full text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    
+                    <!-- Tiny Dots Indicators -->
+                    <div id="carousel-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+                        <button class="w-1.5 h-1.5 rounded-full bg-white transition-all"></button>
+                        <button class="w-1.5 h-1.5 rounded-full bg-white/50 transition-all"></button>
+                        <button class="w-1.5 h-1.5 rounded-full bg-white/50 transition-all"></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Mengapa Memilih Kami -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 text-center">
+                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-10">Keunggulan Layanan Kami</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+                        <div class="w-14 h-14 mx-auto bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center text-2xl mb-5">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">Proses Instan</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed">Pesanan Anda akan diproses dalam hitungan menit secara otomatis setelah pembayaran berhasil.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+                        <div class="w-14 h-14 mx-auto bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center text-2xl mb-5">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">100% Aman & Legal</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed">Kami hanya menyediakan produk bergaransi resmi yang dibayarkan melalui jalur pembayaran yang sah.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+                        <div class="w-14 h-14 mx-auto bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center text-2xl mb-5">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">Dukungan 24/7</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed">Tim dukungan pelanggan kami siap membantu kendala Anda kapan pun melalui WhatsApp.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Cara Kerja (Interactive) -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-10 text-center">Cara Pemesanan</h3>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+                    <div class="flex items-center gap-4 bg-white px-6 py-4 rounded-xl shadow-sm border border-gray-100 w-full md:w-auto">
+                        <div class="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold">1</div>
+                        <div>
+                            <h5 class="font-bold text-gray-900">Pilih Aplikasi</h5>
+                            <p class="text-xs text-gray-500">Pilih layanan di katalog</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-300 hidden md:block"></i>
+                    <i class="fas fa-arrow-down text-gray-300 md:hidden"></i>
+                    <div class="flex items-center gap-4 bg-white px-6 py-4 rounded-xl shadow-sm border border-gray-100 w-full md:w-auto">
+                        <div class="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold">2</div>
+                        <div>
+                            <h5 class="font-bold text-gray-900">Isi Formulir</h5>
+                            <p class="text-xs text-gray-500">Masukan ID & Metode</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-300 hidden md:block"></i>
+                    <i class="fas fa-arrow-down text-gray-300 md:hidden"></i>
+                    <div class="flex items-center gap-4 bg-brand-600 text-white px-6 py-4 rounded-xl shadow-md w-full md:w-auto">
+                        <div class="w-10 h-10 bg-white text-brand-600 rounded-full flex items-center justify-center font-bold">3</div>
+                        <div>
+                            <h5 class="font-bold">Checkout WA</h5>
+                            <p class="text-xs text-brand-100">Proses instan via Admin</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Ulasan Pelanggan -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 mb-10">
+                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-10 text-center">Apa Kata Mereka?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <div class="flex text-yellow-400 text-sm mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="text-gray-600 text-sm italic mb-4">"Gila cepet banget prosesnya. Baru juga transfer via QRIS, admin WA langsung ngasih akun Netflix. Mantap KeMed Store!"</p>
+                        <h6 class="font-bold text-gray-900 text-sm">- Budi Santoso</h6>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <div class="flex text-yellow-400 text-sm mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="text-gray-600 text-sm italic mb-4">"Udah langganan Spotify Family disini selama setahun. Gak pernah ada kendala putus di tengah jalan. Sangat terpercaya."</p>
+                        <h6 class="font-bold text-gray-900 text-sm">- Sarah Wijaya</h6>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <div class="flex text-yellow-400 text-sm mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="text-gray-600 text-sm italic mb-4">"Websitenya keren, gampang pakenya. Pesen Canva Pro buat tugas kampus langsung aktif. Recommended banget!"</p>
+                        <h6 class="font-bold text-gray-900 text-sm">- Aldi Pratama</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SERVICES VIEW ================= -->
+        <div id="view-services" class="view-section hidden py-12 max-w-7xl mx-auto px-4 flex-grow w-full">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Katalog Premium</h2>
+                <p class="text-gray-500 text-lg">Pilih layanan favorit Anda untuk mulai berlangganan.</p>
+            </div>
+            
+            <div id="app-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- ================= PACKAGES VIEW (Internal Flow) ================= -->
+        <div id="view-packages" class="view-section hidden py-12 max-w-5xl mx-auto px-4 flex-grow w-full">
+            <div class="flex items-center gap-4 mb-8">
+                <button onclick="navigate('view-services')" class="w-10 h-10 bg-white border border-gray-300 rounded-lg text-gray-600 hover:text-brand-600 flex items-center justify-center transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div>
+                    <h2 id="package-title" class="text-2xl font-bold text-gray-900">Pilih Paket</h2>
+                </div>
+            </div>
+            <div id="package-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- ================= CHECKOUT VIEW ================= -->
+        <div id="view-checkout" class="view-section hidden py-12 max-w-4xl mx-auto px-4 flex-grow w-full">
+            <div class="flex items-center gap-4 mb-8">
+                <button onclick="navigate('view-packages')" class="w-10 h-10 bg-white border border-gray-300 rounded-lg text-gray-600 hover:text-brand-600 flex items-center justify-center transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">Selesaikan Pembayaran</h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Form Area -->
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-bold text-gray-900 mb-4 flex items-center gap-2"><i class="fas fa-user text-brand-600"></i> Informasi Akun</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Target ID / No. HP / Username</label>
+                                <input type="text" id="co-target" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Masukkan ID target...">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Email Valid</label>
+                                <input type="email" id="co-email" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="nama@email.com">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-bold text-gray-900 mb-4 flex items-center gap-2"><i class="fas fa-wallet text-brand-600"></i> Metode Pembayaran</h4>
+                        <div class="grid grid-cols-2 gap-3" id="payment-grid">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Area -->
+                <div>
+                    <div class="bg-gray-900 rounded-xl p-6 text-white sticky top-24 shadow-lg">
+                        <h4 class="font-bold text-xl mb-6 border-b border-gray-700 pb-3">Ringkasan Pesanan</h4>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-gray-400 text-sm">Aplikasi</span>
+                            <span class="font-semibold" id="sum-app">-</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-gray-400 text-sm">Paket</span>
+                            <span class="font-semibold text-brand-400" id="sum-pkg">-</span>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-6">
+                            <span class="block text-gray-400 text-xs mb-1">Total Tagihan</span>
+                            <span class="block text-2xl font-extrabold text-white" id="sum-price">Rp 0</span>
+                        </div>
+                        <button onclick="submitOrder()" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3.5 rounded-lg flex justify-center items-center gap-2 transition-colors">
+                            <i class="fab fa-whatsapp text-xl"></i> Order via WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= LEADERBOARD (MAINTENANCE) VIEW ================= -->
+        <div id="view-leaderboard" class="view-section hidden py-20 text-center max-w-2xl mx-auto px-4 flex-grow w-full flex flex-col justify-center items-center">
+            <div class="w-24 h-24 bg-brand-50 text-brand-600 rounded-full flex items-center justify-center text-4xl mb-6 mx-auto">
+                <i class="fas fa-tools"></i>
+            </div>
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Fitur Sedang Diperbarui</h2>
+            <p class="text-gray-500 text-lg mb-8">Halaman Leaderboard Top Spender sedang dalam tahap maintenance (perbaikan) untuk memberikan pengalaman yang lebih baik. Silakan kembali lagi nanti.</p>
+            <button onclick="navigate('view-home')" class="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                Kembali ke Beranda
+            </button>
+        </div>
+
+        <!-- ================= ABOUT VIEW ================= -->
+        <div id="view-about" class="view-section hidden py-16 max-w-3xl mx-auto px-4 text-center flex-grow w-full">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-6">Tentang KeMed Store</h2>
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 text-left">
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    <strong>KeMed Store</strong> adalah portal utama Anda untuk mendapatkan layanan premium aplikasi digital dan kebutuhan sosial media secara cepat, aman, dan bergaransi. Berbasis di Indonesia, kami melayani ribuan pelanggan dengan komitmen penuh terhadap kepuasan pengguna.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Sistem kami dirancang untuk efisiensi maksimum. Dengan integrasi pemesanan langsung melalui WhatsApp, pelanggan dapat berkomunikasi secara *real-time* dengan tim admin operasional kami yang berdedikasi. Semua transaksi dilindungi dan legal 100%.
+                </p>
+                <div class="flex justify-center gap-6 text-2xl text-gray-400">
+                    <i class="fab fa-instagram hover:text-brand-600 cursor-pointer transition-colors"></i>
+                    <i class="fab fa-twitter hover:text-brand-600 cursor-pointer transition-colors"></i>
+                    <i class="fab fa-facebook hover:text-brand-600 cursor-pointer transition-colors"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= CONTACT VIEW ================= -->
+        <div id="view-contact" class="view-section hidden py-16 max-w-2xl mx-auto px-4 text-center flex-grow w-full">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-6">Hubungi Kami</h2>
+            <p class="text-gray-500 mb-10">Tim Customer Service kami siap melayani Anda setiap hari mulai pukul 08:00 WIB hingga 23:00 WIB.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <a href="https://wa.me/6282299310934" target="_blank" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-brand-500 transition-all flex flex-col items-center group">
+                    <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h5 class="font-bold text-gray-900">WhatsApp Admin</h5>
+                    <p class="text-sm text-gray-500">0822-9931-0934</p>
+                </a>
+                <a href="mailto:support@kemedstore.com" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-brand-500 transition-all flex flex-col items-center group">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h5 class="font-bold text-gray-900">Email Bantuan</h5>
+                    <p class="text-sm text-gray-500">support@kemedstore.com</p>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-8 text-center mt-auto">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <i class="fas fa-rocket text-brand-500 text-xl"></i>
+                <span class="font-bold text-xl">KeMed Store</span>
+            </div>
+            <p class="text-gray-400 text-sm">&copy; 2026 KeMed Store. All rights reserved. Platform by Michael.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        /* --- CORE ROUTING (DO NOT HIDE NAV OR BODY) --- */
+        function navigate(targetId) {
+            // Find all sections with class 'view-section' and hide them
+            const sections = document.querySelectorAll('.view-section');
+            sections.forEach(sec => {
+                sec.classList.remove('block');
+                sec.classList.add('hidden');
+            });
+            
+            // Show the target section
+            const target = document.getElementById(targetId);
+            if(target) {
+                target.classList.remove('hidden');
+                target.classList.add('block');
+            }
+            
+            // Scroll to top to ensure clean view
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* --- MOBILE MENU --- */
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        /* --- CAROUSEL LOGIC --- */
+        let slideIndex = 0;
+        let slideInterval;
+        
+        function updateCarousel() {
+            const track = document.getElementById('carousel-track');
+            const dots = document.getElementById('carousel-dots').children;
+            
+            // Move track
+            track.style.transform = `translateX(-${slideIndex * 100}%)`;
+            
+            // Update dots
+            for(let i=0; i<dots.length; i++) {
+                if(i === slideIndex) {
+                    dots[i].className = 'w-1.5 h-1.5 rounded-full bg-white transition-all';
+                } else {
+                    dots[i].className = 'w-1.5 h-1.5 rounded-full bg-white/50 transition-all';
+                }
+            }
+        }
+        function nextSlide() {
+            slideIndex = (slideIndex + 1) % 3; // 3 slides
+            updateCarousel();
+            resetInterval();
+        }
+        function prevSlide() {
+            slideIndex = (slideIndex - 1 + 3) % 3;
+            updateCarousel();
+            resetInterval();
+        }
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 4000);
+        }
+        // Start auto slide
+        slideInterval = setInterval(nextSlide, 4000);
+
+        /* --- STORE DATA --- */
+        const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+        
+        const catalog = [
+            { id: 'spotify', name: 'Spotify Premium', icon: 'fab fa-spotify', color: 'text-green-500', 
+              pkgs: [{ id: 'sp1', name: '1 Bulan Individual', price: 25000 }, { id: 'sp2', name: '3 Bulan Individual', price: 65000 }] },
+            { id: 'netflix', name: 'Netflix Premium', icon: 'fab fa-netflix', color: 'text-red-600', 
+              pkgs: [{ id: 'nf1', name: 'Sharing 1 Bulan', price: 35000 }, { id: 'nf2', name: 'Private 1 Bulan', price: 140000 }] },
+            { id: 'youtube', name: 'YouTube Premium', icon: 'fab fa-youtube', color: 'text-red-500', 
+              pkgs: [{ id: 'yt1', name: '1 Bulan Invite', price: 15000 }, { id: 'yt2', name: '1 Bulan Family', price: 35000 }] },
+            { id: 'canva', name: 'Canva Pro', icon: 'fas fa-palette', color: 'text-blue-500', 
+              pkgs: [{ id: 'cv1', name: '1 Bulan Edu', price: 10000 }, { id: 'cv2', name: '1 Tahun Admin', price: 50000 }] },
+            { id: 'disney', name: 'Disney+ Hotstar', icon: 'fas fa-film', color: 'text-blue-700', 
+              pkgs: [{ id: 'ds1', name: 'Sharing 1 Bulan', price: 20000 }, { id: 'ds2', name: 'Private 1 Bulan', price: 50000 }] },
+            { id: 'chatgpt', name: 'ChatGPT Plus', icon: 'fas fa-robot', color: 'text-teal-600', 
+              pkgs: [{ id: 'cg1', name: 'Sharing 1 Bulan', price: 60000 }, { id: 'cg2', name: 'Private 1 Bulan', price: 280000 }] },
+            { id: 'telegram', name: 'Telegram Premium', icon: 'fab fa-telegram', color: 'text-blue-400', 
+              pkgs: [{ id: 'tg1', name: '1 Bulan Gift', price: 45000 }, { id: 'tg2', name: '3 Bulan Gift', price: 120000 }] }
+        ];
+
+        const payments = [
+            { id: 'qris', name: 'QRIS', icon: 'fas fa-qrcode' },
+            { id: 'bca', name: 'BCA', icon: 'fas fa-building-columns' },
+            { id: 'mandiri', name: 'Mandiri', icon: 'fas fa-building-columns' },
+            { id: 'dana', name: 'DANA', icon: 'fas fa-wallet' },
+            { id: 'gopay', name: 'GoPay', icon: 'fas fa-wallet' }
+        ];
+
+        let currentState = { app: null, pkg: null, payment: null };
+
+        /* --- RENDER LOGIC --- */
+        function initApp() {
+            // Render Catalog
+            const grid = document.getElementById('app-grid');
+            catalog.forEach(app => {
+                const minPrice = Math.min(...app.pkgs.map(p => p.price));
+                grid.innerHTML += `
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm text-center flex flex-col justify-between hover:shadow-md transition-shadow">
+                        <div>
+                            <i class="${app.icon} ${app.color} text-5xl mb-4"></i>
+                            <h3 class="font-bold text-gray-900 text-lg">${app.name}</h3>
+                            <p class="text-sm text-gray-500 mt-1 mb-4">Mulai ${formatter.format(minPrice)}</p>
+                        </div>
+                        <button onclick="selectApp('${app.id}')" class="w-full bg-gray-50 border border-gray-200 hover:bg-brand-600 hover:text-white hover:border-brand-600 text-gray-700 font-semibold py-2 rounded-lg transition-colors">
+                            Pilih Layanan
+                        </button>
+                    </div>
+                `;
+            });
+
+            // Render Payment Grid
+            const payGrid = document.getElementById('payment-grid');
+            payments.forEach(pay => {
+                payGrid.innerHTML += `
+                    <div onclick="selectPayment('${pay.name}', this)" class="payment-card bg-white rounded-lg p-4 cursor-pointer text-center relative">
+                        <i class="fas fa-check-circle check-icon text-brand-600 absolute top-2 right-2 hidden text-sm"></i>
+                        <i class="${pay.icon} text-2xl text-gray-400 mb-2"></i>
+                        <div class="font-semibold text-sm text-gray-700">${pay.name}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function selectApp(appId) {
+            currentState.app = catalog.find(a => a.id === appId);
+            document.getElementById('package-title').innerText = `${currentState.app.name} - Pilih Paket`;
+            
+            const list = document.getElementById('package-grid');
+            list.innerHTML = '';
+            currentState.app.pkgs.forEach(pkg => {
+                list.innerHTML += `
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 hover:border-brand-500 shadow-sm text-center transition-all">
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">${pkg.name}</h4>
+                        <p class="text-2xl font-extrabold text-brand-600 mb-6">${formatter.format(pkg.price)}</p>
+                        <button onclick="selectPackage('${pkg.id}')" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-lg transition-colors">
+                            Beli Sekarang
+                        </button>
+                    </div>
+                `;
+            });
+            navigate('view-packages');
+        }
+
+        function selectPackage(pkgId) {
+            currentState.pkg = currentState.app.pkgs.find(p => p.id === pkgId);
+            currentState.payment = null; // Reset payment choice
+            
+            // Reset Payment UI
+            document.querySelectorAll('.payment-card').forEach(el => el.classList.remove('active'));
+
+            // Update Summary UI
+            document.getElementById('sum-app').innerText = currentState.app.name;
+            document.getElementById('sum-pkg').innerText = currentState.pkg.name;
+            document.getElementById('sum-price').innerText = formatter.format(currentState.pkg.price);
+
+            navigate('view-checkout');
+        }
+
+        function selectPayment(method, el) {
+            currentState.payment = method;
+            document.querySelectorAll('.payment-card').forEach(card => card.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function submitOrder() {
+            const target = document.getElementById('co-target').value.trim();
+            const email = document.getElementById('co-email').value.trim();
+
+            if (!target || !email) {
+                alert("Mohon isi Target ID dan Email Anda!");
+                return;
+            }
+            if (!currentState.payment) {
+                alert("Mohon pilih Metode Pembayaran!");
+                return;
+            }
+
+            const waNumber = "6282299310934";
+            const text = `Halo Admin KeMed Store!%0A%0ASaya ingin order:%0A- Layanan: ${currentState.app.name}%0A- Paket: ${currentState.pkg.name}%0A- Harga: ${formatter.format(currentState.pkg.price)}%0A%0AData Akun:%0A- ID/No: ${target}%0A- Email: ${email}%0A%0AMetode Pembayaran: ${currentState.payment}%0A%0AMohon instruksi selanjutnya.`;
+            
+            window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initApp);
+
+    </script>
+</body>
+</html>
